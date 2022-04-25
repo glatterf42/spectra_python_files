@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-basedir = Path("/home/ben/sims/swift/monofonic_tests/spectra/")
+basedir = Path("/home/ben/sims/data_swift/monofonic_tests/spectra/")
 
 #choose Nres and Lbox:
 waveforms = ['DB2', "DB4", "DB8", "shannon"]  #DB2, DB4, DB8, shannon are all we have right now
@@ -23,8 +23,8 @@ scale_factor = 4       # give index of a list above
 
 
 for wave in waveforms:
-    filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_a{scale_factor}_cross_spectrum"
-    # filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_ics_vsc_cross_spectrum" # for ICs
+    # filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_a{scale_factor}_cross_spectrum"
+    filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_ics_local_cross_spectrum" # for ICs
     
     #find columns in file manually
     #is k really in Mpc? Swift doesn't use /h internally at least.
@@ -46,14 +46,14 @@ for wave in waveforms:
     # Plot the Cross Correlation:
     plt.plot(k, pcross, label=f"{wave}")
 
-# savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_ics_vsc") # for ICs
-# plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a=0.02 vsc") # for ICs
+savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_ics_local") # for ICs
+plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a=0.02") # for ICs
 
-savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_a{scale_factor}")
-plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a={a[scale_factor]}")
+# savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_a{scale_factor}")
+# plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a={a[scale_factor]}")
 
 plt.xscale("log")
-plt.xlabel("k [Mpc]")
+plt.xlabel(r"k [$\mathrm{Mpc}^{-1}$]")
 plt.ylabel("C = Pcross")
 plt.ylim(0.8, 1.0)
 plt.xlim(k[0], knyquist)

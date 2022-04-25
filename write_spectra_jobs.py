@@ -42,9 +42,9 @@ set -u
 
 
 
-def write_spectra_jobs_agora(scale_factor: int, Nres1: int, Nres2: int, output_basedir: Path):
+def write_spectra_jobs_agora(scale_factor: int, Nres1: int, Nres2: int, Lbox: float, output_basedir: Path):
     Nres_max = max(Nres1, Nres2)
-    input_dir = str(agora_test_basedir) 
+    input_dir = str(agora_test_basedir / f'{Lbox}mpc/') 
     output_dir = output_basedir
     output_dir_string = str(output_dir)
     if output_dir.exists():
