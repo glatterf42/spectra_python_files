@@ -15,16 +15,17 @@ basedir = Path("/home/ben/sims/data_swift/monofonic_tests/spectra/")
 #choose Nres and Lbox:
 waveforms = ['DB2', "DB4", "DB8", "shannon"]  #DB2, DB4, DB8, shannon are all we have right now
 Lbox = 100.0  #only option as of now
-Nres = 256      #128 and 256 exist for now
+Nres1 = 128      #Nres1 should always be smaller than Nres2
+Nres2 = 256      #128, 256 and 512 exist for now
 k0 = 2 * 3.14159265358979323846264338327950 / Lbox
-knyquist = Nres * k0
+knyquist = Nres2 * k0   #Not used at the moment anyway except for upper limit, for which we need the larger Nres
 a = [0.166666, 0.333333, 0.5, 0.666666, 1.0]
 scale_factor = 4       # give index of a list above
 
 
 for wave in waveforms:
-    # filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_a{scale_factor}_cross_spectrum"
-    filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_ics_local_cross_spectrum" # for ICs
+    # filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_a{scale_factor}_{Nres1}_{Nres2}_cross_spectrum"
+    filename = basedir / f"{wave}_{Lbox:.0f}/{wave}_{Lbox:.0f}_ics_{Nres1}_{Nres2}_cross_spectrum" # for ICs
     
     #find columns in file manually
     #is k really in Mpc? Swift doesn't use /h internally at least.
@@ -46,11 +47,11 @@ for wave in waveforms:
     # Plot the Cross Correlation:
     plt.plot(k, pcross, label=f"{wave}")
 
-savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_ics_local") # for ICs
-plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a=0.02") # for ICs
+savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres1}_{Nres2}_{Lbox:.0f}_ics") # for ICs
+plt.title(f"Cross correlation N=({Nres1}, {Nres2}) L={Lbox:.0f} a=0.02") # for ICs
 
-# savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres}_{Lbox:.0f}_a{scale_factor}")
-# plt.title(f"Cross correlation N={Nres} L={Lbox:.0f} a={a[scale_factor]}")
+# savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/cross_{Nres1}_{Nres2}_{Lbox:.0f}_a{scale_factor}")
+# plt.title(f"Cross correlation N=({Nres1}, {Nres2}) L={Lbox:.0f} a={a[scale_factor]}")
 
 plt.xscale("log")
 plt.xlabel(r"k [$\mathrm{Mpc}^{-1}$]")

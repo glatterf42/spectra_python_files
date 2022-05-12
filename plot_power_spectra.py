@@ -10,20 +10,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-basedir = Path("/home/ben/sims/swift/monofonic_tests/spectra/")
+basedir = Path("/home/ben/sims/data_swift/monofonic_tests/spectra/")
 
 #choose waveform and Lbox:
 waveform = "shannon"  #DB2, DB4, DB8 or shannon
 Lbox = 100.0  #only option as of now
 Nres1 = 128
-Nres2 = 256
+Nres2 = 512
 k0 = 2 * 3.14159265358979323846264338327950 / Lbox
 knyquist1 = Nres1 * k0
 knyquist2 = Nres2 * k0
 a = [0.166666, 0.333333, 0.5, 0.666666, 1.0]
 scale_factor = 4       # give index of a list above
 
-filename = basedir / f"{waveform}_{Lbox:.0f}/{waveform}_{Lbox:.0f}_a{scale_factor}_cross_spectrum"
+filename = basedir / f"{waveform}_{Lbox:.0f}/{waveform}_{Lbox:.0f}_a{scale_factor}_{Nres1}_{Nres2}_cross_spectrum"
 # filename = basedir / f"{waveform}_{Lbox:.0f}/{waveform}_{Lbox:.0f}_ics_vsc_cross_spectrum" # for ICs
 # savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/power_{waveform}_{Lbox:.0f}_ics_vsc") # for ICs
 # plt.title(f"Power Spectra {waveform} L={Lbox:.0f} a=0.02 vsc") # for ICs
@@ -50,7 +50,7 @@ plt.loglog(k, p1, label="P1")
 plt.loglog(k, p2, label="P2")
 
 plt.title(f"Power Spectra {waveform} L={Lbox:.0f} a={a[scale_factor]}")
-savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/power_{waveform}_{Lbox:.0f}_a{scale_factor}")
+savedir = Path(f"/home/ben/Pictures/swift/monofonic_tests/spectra/power_{waveform}_{Lbox:.0f}_{Nres1}_{Nres2}_a{scale_factor}")
 
 plt.xlabel("k [Mpc]")
 plt.ylabel("P")
